@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css';
+import Style_button from './Components/style_button';
 import Button_value from './Components/button_value'; 
-import Style_button from './Components/style_button'; 
-import ColorControle from './Components/colorControle/colorControle';
+
   
 function App() {
   const [value, setValue] = useState('')
@@ -14,16 +14,27 @@ function App() {
   const [create, setCreate] = useState(false)
   const [border, setBorder] = useState(0)
 
-  const [white, setWhite] = useState({
-    background: '#000'
-  })
-  const [black, setBlack] = useState({
-    background: '#fff'
-  })
-
   const [typeOfStyle, setTypeOfStyle] = useState('')
   const [customStyleType, setCustomeStyleType] = useState([{type: ''}])
-  const [customOwnStyle, setCustomeOwnStyle] = useState([{ownStyle: '' }])
+  const [customOwnStyle, setCustomeOwnStyle] = useState([{ ownStyle: '' }])
+
+  const [bacgroundColor, setBackgroundColor] = useState('white')
+  const [textColor, setTextColor] = useState('black')
+  
+  useEffect(() => {
+    document.body.style.backgroundColor = bacgroundColor;
+    document.body.style.color = textColor;
+    
+    return () => {
+      document.body.style.backgroundColor = 'white'
+      document.body.style.color = "black";
+    }
+  }, [bacgroundColor, textColor])
+
+  const colorChanger = (color, colorText) => {
+    setBackgroundColor(color)
+    setTextColor(colorText)
+  }
 
   const typeStyleFunction = (event) => {
     let newTypeStyle = event.target.value
@@ -75,21 +86,20 @@ function App() {
     setCustomeOwnStyle(updatedStyles);
     };
   
-  const BackgroundControler = () => {
-    if (white || black) {
-      setWhite({
-        background: '#fff'
-      })
-    } else {
-      setBlack({
-        background: '#000'
-      })
-    }
 
-  }
-  
   return (
-      <div style={white}>
+    <div style={{
+      background: bacgroundColor
+    }} class='bacground'>
+      <div className='wrapperControlers'>
+        <div className='whiteControlerBlock'>
+            <button  onClick={() => colorChanger('white', "black")} className='white'/>
+        </div>
+          
+        <div className='blackControlerBlock'>
+            <button onClick={() => colorChanger('#353434', 'white')} className='black'/>
+        </div>
+      </div>
         <Style_button value={value}
           height={height}
           color={color}
@@ -119,7 +129,6 @@ function App() {
           customStyleType={customStyleType}
         customOwnStyle={customOwnStyle}
       />
-      <ColorControle changeColorWhite={BackgroundControler} />
     </div>
     );
   }

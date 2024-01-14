@@ -29,7 +29,6 @@ function Style_button({ value,
                 <p> <input placeholder='Width' value={width} onChange={widthFunction}/></p>  
                 <p><input placeholder='Height' value={height} onChange={heightFunction}/></p>  
                 <p><input placeholder='Border' value={border} onChange={borderFunction}/></p>  
-                <p><input placeholder='Color' value={color} onChange={colorBackFunction} /></p>  
             </div>
 
                 <div className="App">
